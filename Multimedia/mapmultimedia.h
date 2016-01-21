@@ -9,6 +9,9 @@
 #include "groupe.h"
 #include "photo.h"
 #include "video.h"
+#include "film.h"
+#include "groupe.h"
+
 using namespace std;
 
 typedef std::shared_ptr<Multimedia> sp_Multimedia;
@@ -22,10 +25,20 @@ class MapMultimedia {
     public:
         MapMultimedia(){}
         ~MapMultimedia(){}
-
+        
+        
+/*          Création                                                                       */
         Photo* createPhoto(string _nom, string _pathname, double _lat, double _lon);
         Video* createVideo(string _nom, string _pathname, int _duree);
         Film* createFilm(string _nom, string _pathname, int _duree);
+        Groupe* createGroupe(string _nom);
+        
+/*          Suppression                                                                    */
+        void deleteMultimedia(string _nom);
+
+/*          Recherche                                                                      */
+        const void findMultimedia(string _nom);
+        
 
 };
 

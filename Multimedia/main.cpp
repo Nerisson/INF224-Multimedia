@@ -68,7 +68,15 @@ int main(int argc, char *argv[]){
 
     m->createPhoto("Photo1", "PathPhoto1", 20, 20);
     m->createVideo("Video1", "PathVideo1", 800);
+    m->createVideo("Film1", "PathFilm1", 1800);
     
+    m->createGroupe("Group1");
+    m->createGroupe("Group2");
+    m->createGroupe("Group3");
+    
+    m->findMultimedia("Film1");
+    m->deleteMultimedia("Film1");
+    m->findMultimedia("Film1");
     
     delete m;
     

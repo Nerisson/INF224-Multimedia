@@ -13,3 +13,31 @@ Video* MapMultimedia::createVideo(string _nom, string _pathname, int _duree){
     list_ojb[_nom] = video;
     return v;
 }
+
+Film* MapMultimedia::createFilm(string _nom, string _pathname, int _duree){
+    Film* f = new Film(_nom, _pathname, _duree);
+    sp_Multimedia film(f);
+    list_ojb[_nom] = film;
+    return f;
+}
+
+Groupe* MapMultimedia::createGroupe(string _nom){
+    Groupe* g = new Groupe(_nom);
+    sp_Groupe groupe(g);
+    list_groupes[_nom] = groupe;
+    return g;
+}
+
+void MapMultimedia::deleteMultimedia(string _nom){
+    auto iterator = list_ojb.find(_nom);
+    if (iterator != list_ojb.end())
+        list_ojb.erase(iterator);
+}
+
+const void MapMultimedia::findMultimedia(string _nom){
+    auto iterator = list_ojb.find(_nom);
+    if (iterator != list_ojb.end())
+        iterator->second->affiche(cout);
+    else
+        cout << "Not found" << endl;
+}
