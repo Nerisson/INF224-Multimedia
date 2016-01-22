@@ -1,10 +1,10 @@
 #include "mapmultimedia.h"
 
-Photo* MapMultimedia::createPhoto(string _nom, string _pathname, double _lat, double _lon){
+sp_Multimedia MapMultimedia::createPhoto(string _nom, string _pathname, double _lat, double _lon){
     Photo* p = new Photo(_nom, _pathname, _lat, _lon);
     sp_Multimedia photo(p);
     list_ojb[_nom] = photo;
-    return p;
+    return photo;
 }
 
 Video* MapMultimedia::createVideo(string _nom, string _pathname, int _duree){
@@ -21,11 +21,11 @@ Film* MapMultimedia::createFilm(string _nom, string _pathname, int _duree){
     return f;
 }
 
-Groupe* MapMultimedia::createGroupe(string _nom){
+sp_Groupe MapMultimedia::createGroupe(string _nom){
     Groupe* g = new Groupe(_nom);
     sp_Groupe groupe(g);
     list_groupes[_nom] = groupe;
-    return g;
+    return groupe;
 }
 
 void MapMultimedia::deleteMultimedia(string _nom){

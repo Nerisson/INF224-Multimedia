@@ -30,10 +30,10 @@ class MapMultimedia {
         
         
 /*          Création                                                                       */
-        Photo* createPhoto(string _nom, string _pathname, double _lat, double _lon);
+        sp_Multimedia createPhoto(string _nom, string _pathname, double _lat, double _lon);
         Video* createVideo(string _nom, string _pathname, int _duree);
         Film* createFilm(string _nom, string _pathname, int _duree);
-        Groupe* createGroupe(string _nom);
+        sp_Groupe createGroupe(string _nom);
         
 /*          Suppression                                                                    */
         void deleteMultimedia(string _nom);
