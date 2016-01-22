@@ -11,3 +11,11 @@ void Groupe::affiche(ostream& ostream) const{
         (*lit)->affiche(ostream);
     }
 }
+
+void removeMultimedia(string _nom){
+    for(auto lit = begin(); lit!=end(); ++lit){
+        sp_Multimedia objet = (*lit);
+        if(objet->getNom().compare(_nom))
+            erase(lit);
+    }
+}

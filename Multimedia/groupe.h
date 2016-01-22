@@ -22,6 +22,8 @@ class Groupe:public list<sp_Multimedia> {
         virtual string getNom() const;
         virtual void affiche(ostream& ostream) const;
         virtual ~Groupe(){}
+        
+        void removeMultimedia(string _nom);
 };
 
 #endif // GROUPE_H
