@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <algorithm>
 
 #include "multimedia.h"
 #include "groupe.h"
@@ -11,6 +12,7 @@
 #include "video.h"
 #include "film.h"
 #include "groupe.h"
+
 
 using namespace std;
 

@@ -30,6 +30,18 @@ Groupe* MapMultimedia::createGroupe(string _nom){
 
 void MapMultimedia::deleteMultimedia(string _nom){
     auto iterator = list_ojb.find(_nom);
+    
+    
+    
+    
+    for(auto it=list_groupes.begin() ; it!=list_groupes.end() ; ++it){
+        cout << it->first << endl;
+    }
+    
+    
+    
+    
+    
     if (iterator != list_ojb.end())
         list_ojb.erase(iterator);
 }

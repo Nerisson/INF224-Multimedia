@@ -66,13 +66,20 @@ int main(int argc, char *argv[]){
     
     MapMultimedia* m = new MapMultimedia();
 
-    m->createPhoto("Photo1", "PathPhoto1", 20, 20);
+    Photo* p2 = m->createPhoto("Photo1", "PathPhoto1", 20, 20);
     m->createVideo("Video1", "PathVideo1", 800);
     m->createVideo("Film1", "PathFilm1", 1800);
     
-    m->createGroupe("Group1");
-    m->createGroupe("Group2");
-    m->createGroupe("Group3");
+    Groupe* g21 = m->createGroupe("Group1");
+    //Groupe* g22 = m->createGroupe("Group2");
+    //Groupe* g23 = m->createGroupe("Group3");
+    
+    sp_Multimedia sp2(p2);
+    
+    g21->push_back(sp2);
+    //g22->push_back(sp_Multimedia(p2));
+    //g23->push_back(sp_Multimedia(p2));
+    
     
     m->findMultimedia("Film1");
     m->deleteMultimedia("Film1");
