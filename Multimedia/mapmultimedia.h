@@ -37,9 +37,11 @@ class MapMultimedia {
         
 /*          Suppression                                                                    */
         void deleteMultimedia(string _nom);
-
+        void deleteGroupe(string _nom);
+    
 /*          Recherche                                                                      */
-        sp_Multimedia findMultimedia(string _nom);
+        sp_Multimedia findMultimedia(string _nom) const;
+        sp_Groupe findGroupe(string _nom) const;
         
 
 };

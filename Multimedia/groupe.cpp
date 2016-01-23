@@ -13,9 +13,11 @@ void Groupe::affiche(ostream& ostream) const{
 }
 
 void Groupe::removeMultimedia(string _nom){
-    for(auto lit = begin(); lit != end(); ++lit){
-        sp_Multimedia objet = (*lit);
-        if(objet->getNom().compare(_nom))
-            erase(lit);
-    }
+    auto it = std::remove_if (begin(), end(), [_nom](sp_Multimedia i){
+        if (_nom.compare(i->getNom())) {
+            return false;
+        }
+        return true;
+    });
+    erase(it, end());
 }
