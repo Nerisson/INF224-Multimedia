@@ -29,7 +29,6 @@ sp_Groupe MapMultimedia::createGroupe(string _nom){
 }
 
 void MapMultimedia::deleteMultimedia(string _nom){
-    
     cout << "@@@@@ Deleting: " << _nom << endl;
     for(auto it=list_groupes.begin() ; it!=list_groupes.end() ; ++it){
         it->second->removeMultimedia(_nom);
@@ -39,9 +38,23 @@ void MapMultimedia::deleteMultimedia(string _nom){
         list_ojb.erase(iterator);
 }
 
-sp_Multimedia MapMultimedia::findMultimedia(string _nom){
+void MapMultimedia::deleteGroupe(string _nom){
+    auto iterator = list_groupes.find(_nom);
+    if (iterator != list_groupes.end())
+        list_groupes.erase(iterator);
+}
+
+sp_Multimedia MapMultimedia::findMultimedia(string _nom) const{
     auto iterator = list_ojb.find(_nom);
     if (iterator != list_ojb.end())
+        return iterator->second;
+    else
+        return NULL;
+}
+
+sp_Groupe MapMultimedia::findGroupe(string _nom) const{
+    auto iterator = list_groupes.find(_nom);
+    if (iterator != list_groupes.end())
         return iterator->second;
     else
         return NULL;

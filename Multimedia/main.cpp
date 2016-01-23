@@ -61,8 +61,11 @@ int main(int argc, char *argv[]){
     delete g2;
     delete g;
 
-
-
+    cout << endl;
+    cout << "##################################" << endl;
+    cout << "#            Map Multimedia      #" << endl;
+    cout << "##################################" << endl;
+    
     
     MapMultimedia* m = new MapMultimedia();
 
@@ -73,13 +76,15 @@ int main(int argc, char *argv[]){
     sp_Groupe g21 = m->createGroupe("Group1");
     sp_Groupe g22 = m->createGroupe("Group2");
     sp_Groupe g23 = m->createGroupe("Group3");
+    sp_Groupe g24 = m->createGroupe("Group4");
     
     g21->push_back(p2);
     g22->push_back(p2);
     g23->push_back(p2);
+    g24->push_back(p2);
     
     
-    auto toto = m->findMultimedia("Film1");
+    auto toto = m->findMultimedia("Photo1");
     if(toto != NULL){
         cout << "################" << endl;
         toto->affiche(cout);
@@ -92,20 +97,50 @@ int main(int argc, char *argv[]){
     g21->affiche(cout);
     g22->affiche(cout);
     g23->affiche(cout);
-    m->deleteMultimedia("Film1");
+    m->deleteMultimedia("Photo1");
     g21->affiche(cout);
     g22->affiche(cout);
     g23->affiche(cout);
-    auto toto2 = m->findMultimedia("Film1");
+    
+    auto toto2 = m->findMultimedia("Photo1");
     if(toto2 != NULL){
         cout << "################" << endl;
-        toto->affiche(cout);
+        toto2->affiche(cout);
         cout << "################" << endl;
     } else {
         cout << "################" << endl;
         cout << "not found" << endl;
         cout << "################" << endl;
     }
+    
+    cout << endl;
+    cout << "##################################" << endl;
+    cout << "             Delete Groupe" << endl;
+    
+    sp_Groupe g4 = m->findGroupe("Group4");
+    if(g4 != NULL){
+        cout << "################" << endl;
+        g4->affiche(cout);
+        cout << "################" << endl;
+    } else {
+        cout << "################" << endl;
+        cout << "not found" << endl;
+        cout << "################" << endl;
+    }
+    
+    m->deleteGroupe("Group4");
+    
+    g4 = m->findGroupe("Group4");
+    if(g4 != NULL){
+        cout << "################" << endl;
+        g4->affiche(cout);
+        cout << "################" << endl;
+    } else {
+        cout << "################" << endl;
+        cout << "not found" << endl;
+        cout << "################" << endl;
+    }
+    
     
     delete m;
     

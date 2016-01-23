@@ -15,9 +15,9 @@ void Groupe::affiche(ostream& ostream) const{
 void Groupe::removeMultimedia(string _nom){
     auto it = std::remove_if (begin(), end(), [_nom](sp_Multimedia i){
         if (_nom.compare(i->getNom())) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     });
     erase(it, end());
 }
