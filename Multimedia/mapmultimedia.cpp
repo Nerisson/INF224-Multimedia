@@ -46,10 +46,10 @@ void MapMultimedia::deleteMultimedia(string _nom){
         list_ojb.erase(iterator);
 }
 
-const void MapMultimedia::findMultimedia(string _nom){
+sp_Multimedia MapMultimedia::findMultimedia(string _nom){
     auto iterator = list_ojb.find(_nom);
     if (iterator != list_ojb.end())
-        iterator->second->affiche(cout);
+        return iterator->second;
     else
-        cout << "Not found" << endl;
+        return NULL;
 }

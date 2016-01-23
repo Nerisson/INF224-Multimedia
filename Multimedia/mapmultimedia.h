@@ -39,7 +39,7 @@ class MapMultimedia {
         void deleteMultimedia(string _nom);
 
 /*          Recherche                                                                      */
-        const void findMultimedia(string _nom);
+        sp_Multimedia findMultimedia(string _nom);
         
 
 };

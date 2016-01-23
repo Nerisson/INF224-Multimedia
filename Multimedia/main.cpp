@@ -79,9 +79,28 @@ int main(int argc, char *argv[]){
     g23->push_back(p2);
     
     
-    m->findMultimedia("Film1");
+    auto toto = m->findMultimedia("Film1");
+    if(toto != NULL){
+        cout << "################" << endl;
+        toto->affiche(cout);
+        cout << "################" << endl;
+    } else {
+        cout << "################" << endl;
+        cout << "not found" << endl;
+        cout << "################" << endl;
+    }
+    
     m->deleteMultimedia("Film1");
-    m->findMultimedia("Film1");
+    auto toto2 = m->findMultimedia("Film1");
+    if(toto2 != NULL){
+        cout << "################" << endl;
+        toto->affiche(cout);
+        cout << "################" << endl;
+    } else {
+        cout << "################" << endl;
+        cout << "not found" << endl;
+        cout << "################" << endl;
+    }
     
     delete m;
     
