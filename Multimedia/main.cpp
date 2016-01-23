@@ -89,8 +89,13 @@ int main(int argc, char *argv[]){
         cout << "not found" << endl;
         cout << "################" << endl;
     }
-    
+    g21->affiche(cout);
+    g22->affiche(cout);
+    g23->affiche(cout);
     m->deleteMultimedia("Film1");
+    g21->affiche(cout);
+    g22->affiche(cout);
+    g23->affiche(cout);
     auto toto2 = m->findMultimedia("Film1");
     if(toto2 != NULL){
         cout << "################" << endl;

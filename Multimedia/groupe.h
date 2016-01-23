@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include<memory>
+#include <algorithm>
 
 #include "multimedia.h"
 

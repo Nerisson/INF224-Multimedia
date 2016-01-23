@@ -29,19 +29,12 @@ sp_Groupe MapMultimedia::createGroupe(string _nom){
 }
 
 void MapMultimedia::deleteMultimedia(string _nom){
-    auto iterator = list_ojb.find(_nom);
     
-    
-    
-    
+    cout << "@@@@@ Deleting: " << _nom << endl;
     for(auto it=list_groupes.begin() ; it!=list_groupes.end() ; ++it){
-        cout << it->first << endl;
+        it->second->removeMultimedia(_nom);
     }
-    
-    
-    
-    
-    
+    auto iterator = list_ojb.find(_nom);
     if (iterator != list_ojb.end())
         list_ojb.erase(iterator);
 }
