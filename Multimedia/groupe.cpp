@@ -21,3 +21,9 @@ void Groupe::removeMultimedia(string _nom){
     });
     erase(it, end());
 }
+
+void Groupe::executerGroupe() const{
+    for(auto lit = begin(); lit!=end(); ++lit){
+        (*lit)->executer();
+    }
+}

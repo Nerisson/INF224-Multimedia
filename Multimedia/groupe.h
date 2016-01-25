@@ -25,6 +25,7 @@ class Groupe:public list<sp_Multimedia> {
         virtual ~Groupe(){}
         
         void removeMultimedia(string _nom);
+        void executerGroupe() const;
 };
 
 #endif // GROUPE_H

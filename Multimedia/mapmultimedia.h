@@ -38,10 +38,19 @@ class MapMultimedia {
 /*          Suppression                                                                    */
         void deleteMultimedia(string _nom);
         void deleteGroupe(string _nom);
-    
+
 /*          Recherche                                                                      */
         sp_Multimedia findMultimedia(string _nom) const;
         sp_Groupe findGroupe(string _nom) const;
+    
+/*          Affichage                                                                      */
+        void printMultimedia(string _nom, ostream& ostream) const;
+        void printGroupe(string _nom, ostream& ostream) const;
+        
+/*          Play                                                                           */
+        void playMultimedia(string _nom) const;
+        void playGroupe(string _nom) const;
+        
         
 
 };

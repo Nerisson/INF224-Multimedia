@@ -29,7 +29,6 @@ sp_Groupe MapMultimedia::createGroupe(string _nom){
 }
 
 void MapMultimedia::deleteMultimedia(string _nom){
-    cout << "@@@@@ Deleting: " << _nom << endl;
     for(auto it=list_groupes.begin() ; it!=list_groupes.end() ; ++it){
         it->second->removeMultimedia(_nom);
     }
@@ -59,3 +58,34 @@ sp_Groupe MapMultimedia::findGroupe(string _nom) const{
     else
         return NULL;
 }
+
+void MapMultimedia::printMultimedia(string _nom, ostream& ostream) const{
+    sp_Multimedia multi = findMultimedia(_nom);
+    if (multi != NULL)
+        multi->affiche(ostream);
+    else
+        ostream << "Not found: " << _nom << endl;
+}
+
+void MapMultimedia::printGroupe(string _nom, ostream& ostream) const{
+    sp_Groupe groupe = findGroupe(_nom);
+    if (groupe != NULL)
+        groupe->affiche(ostream);
+    else
+        ostream << "Not found:"  << _nom << endl;
+}
+
+void MapMultimedia::playMultimedia(string _nom) const{
+    sp_Multimedia multi = findMultimedia(_nom);
+    if (multi != NULL)
+        multi->executer();
+    else
+        cout << "Multi not Found: " << _nom << endl;
+}
+
+void MapMultimedia::playGroupe(string _nom) const{
+    sp_Groupe groupe = findGroupe(_nom);
+    if (groupe != NULL)
+        groupe->executerGroupe(); 
+}
+
