@@ -6,6 +6,6 @@ void Photo::affiche(ostream& ostream) const{
 }
 
 void Photo::executer() const{
-    string s = "imagej "+getPathname()+" &";
+    string s = "imagej -p 1 "+getPathname()+" &";
     system(s.c_str());
 }

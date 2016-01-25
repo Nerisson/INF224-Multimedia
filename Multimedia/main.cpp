@@ -112,10 +112,16 @@ int main(int argc, char *argv[]){
     cout << "             Playing Image" << endl;
     
     
-    m->createPhoto("Sample Image", "./Ressources/IMGP5539.JPG", 20, 20);
+    sp_Multimedia p22 = m->createPhoto("Sample Image", "./Ressources/IMGP5539.JPG", 20, 20);
+    sp_Multimedia p23 = m->createPhoto("Sample Image1", "./Ressources/IMGP5550.JPG", 20, 20);
+    sp_Multimedia p24 = m->createPhoto("Sample Image2", "./Ressources/IMGP5552.JPG", 20, 20);
     
-    m->playMultimedia("Sample Image");
+    //m->playMultimedia("Sample Image");
+    g21->push_back(p22);
+    g21->push_back(p23);
+    g21->push_back(p24);
     
+    m->playGroupe("Group1");
     
     delete m;
     
