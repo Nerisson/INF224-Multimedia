@@ -107,9 +107,13 @@ int main(int argc, char *argv[]){
     m->printGroupe("Group4", cout);
     
     
+    cout << endl;
+    cout << "##################################" << endl;
+    cout << "             Playing Image" << endl;
     
     
     m->createPhoto("Sample Image", "./Ressources/IMGP5539.JPG", 20, 20);
+    
     m->playMultimedia("Sample Image");
     
     

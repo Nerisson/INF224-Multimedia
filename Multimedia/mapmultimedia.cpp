@@ -78,7 +78,9 @@ void MapMultimedia::printGroupe(string _nom, ostream& ostream) const{
 void MapMultimedia::playMultimedia(string _nom) const{
     sp_Multimedia multi = findMultimedia(_nom);
     if (multi != NULL)
-        multi->executer(); 
+        multi->executer();
+    else
+        cout << "Multi not Found: " << _nom << endl;
 }
 
 void MapMultimedia::playGroupe(string _nom) const{
