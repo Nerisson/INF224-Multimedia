@@ -84,16 +84,8 @@ int main(int argc, char *argv[]){
     g24->push_back(p2);
     
     
-    auto toto = m->findMultimedia("Photo1");
-    if(toto != NULL){
-        cout << "################" << endl;
-        toto->affiche(cout);
-        cout << "################" << endl;
-    } else {
-        cout << "################" << endl;
-        cout << "not found" << endl;
-        cout << "################" << endl;
-    }
+    m->printMultimedia("Photo1", cout);
+
     g21->affiche(cout);
     g22->affiche(cout);
     g23->affiche(cout);
@@ -102,44 +94,23 @@ int main(int argc, char *argv[]){
     g22->affiche(cout);
     g23->affiche(cout);
     
-    auto toto2 = m->findMultimedia("Photo1");
-    if(toto2 != NULL){
-        cout << "################" << endl;
-        toto2->affiche(cout);
-        cout << "################" << endl;
-    } else {
-        cout << "################" << endl;
-        cout << "not found" << endl;
-        cout << "################" << endl;
-    }
+    m->printMultimedia("Photo1", cout);
     
     cout << endl;
     cout << "##################################" << endl;
     cout << "             Delete Groupe" << endl;
     
-    sp_Groupe g4 = m->findGroupe("Group4");
-    if(g4 != NULL){
-        cout << "################" << endl;
-        g4->affiche(cout);
-        cout << "################" << endl;
-    } else {
-        cout << "################" << endl;
-        cout << "not found" << endl;
-        cout << "################" << endl;
-    }
+    m->printGroupe("Group4", cout);
     
     m->deleteGroupe("Group4");
     
-    g4 = m->findGroupe("Group4");
-    if(g4 != NULL){
-        cout << "################" << endl;
-        g4->affiche(cout);
-        cout << "################" << endl;
-    } else {
-        cout << "################" << endl;
-        cout << "not found" << endl;
-        cout << "################" << endl;
-    }
+    m->printGroupe("Group4", cout);
+    
+    
+    
+    
+    m->createPhoto("Sample Image", "./Ressources/IMGP5539.JPG", 20, 20);
+    m->playMultimedia("Sample Image");
     
     
     delete m;
