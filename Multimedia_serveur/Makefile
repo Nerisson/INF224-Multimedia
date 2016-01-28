@@ -9,12 +9,12 @@
 #
 # Nom du programme
 #
-PROG = multi
+PROG = multi_server
 
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = multimedia.cpp main.cpp video.cpp photo.cpp film.cpp groupe.cpp mapmultimedia.cpp
+SOURCES = multimedia.cpp server.cpp video.cpp photo.cpp film.cpp groupe.cpp mapmultimedia.cpp Socket.cpp TCPServer.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
@@ -43,7 +43,7 @@ LDFLAGS =
 # Librairies a utiliser
 # Example: LDLIBS = -L/usr/local/qt/lib -lqt
 #
-LDLIBS = 
+LDLIBS= -lpthread
 
 
 ##########################################

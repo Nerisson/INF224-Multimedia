@@ -20,6 +20,7 @@ class Film:public Video{
         virtual unsigned int* getChapters() const;
 
         virtual void affiche(ostream& ostream) const override;
+        virtual string getClassName() const override;
 };
 
 #endif // FILM_H

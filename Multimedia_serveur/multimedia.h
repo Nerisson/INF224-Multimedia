@@ -25,6 +25,7 @@ class Multimedia{
         virtual void affiche(ostream& ostream) const;
 
         virtual void executer() const = 0;
+        virtual string getClassName() const = 0;
 };
 
 #endif // MULTIMEDIA_H

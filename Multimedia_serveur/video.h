@@ -22,6 +22,7 @@ class Video:public Multimedia{
         virtual void affiche(ostream& ostream) const override;
 
         virtual void executer() const override;
+        virtual string getClassName() const override;
 };
 
 #endif // VIDEO_H

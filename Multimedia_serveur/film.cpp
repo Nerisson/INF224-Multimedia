@@ -16,9 +16,13 @@ unsigned int *Film::getChapters() const{
 }
 
 void Film::affiche(ostream& ostream) const{
-    ostream << "I'm a film!" << endl;
+    ostream << "I'm a film!" << "#";
     Video::affiche(ostream);
-    ostream << " # Chapters: " << nbChapitres << endl;
+    ostream << " nb Chapters: " << nbChapitres << "#";
     for(unsigned int i=0; i<nbChapitres; ++i)
-        ostream << "     Chapter " << i << ": " << chapters[i] << endl;
+        ostream << "     Chapter " << i << ": " << chapters[i] << "#";
+}
+
+string Film::getClassName() const {
+    return "Film";
 }
