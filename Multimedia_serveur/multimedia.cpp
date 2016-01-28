@@ -18,6 +18,6 @@ void Multimedia::setPathname(string _pathname){
 }
 
 void Multimedia::affiche(ostream& ostream) const{
-    ostream << "Nom:      " <<   nom    << endl;
-    ostream << "Pathname: " << pathname << endl;
+    ostream << "Nom:      " <<   nom    << "#";
+    ostream << "Pathname: " << pathname << "#";
 }

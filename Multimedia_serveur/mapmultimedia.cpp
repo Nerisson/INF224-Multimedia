@@ -75,6 +75,13 @@ void MapMultimedia::printGroupe(string _nom, ostream& ostream) const{
         ostream << "Not found:"  << _nom << endl;
 }
 
+
+void MapMultimedia::printListMultimedia(ostream& ostream) const{
+    for(auto it=list_ojb.begin() ; it!=list_ojb.end() ; ++it){
+        ostream << it->first << ":" << it->second->getClassName() <<"#";
+    }
+}
+
 void MapMultimedia::playMultimedia(string _nom) const{
     sp_Multimedia multi = findMultimedia(_nom);
     if (multi != NULL)

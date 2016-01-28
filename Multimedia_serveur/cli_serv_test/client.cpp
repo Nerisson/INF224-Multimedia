@@ -3,6 +3,7 @@
 // eric lecolinet - telecom paristech - 2015
 //
 
+#include <algorithm>
 #include <iostream>
 #include "Socket.h"
 using namespace std;
@@ -48,11 +49,15 @@ int main(int argc, char* argv[]) {
     string request, response;
     
     getline(cin, request);
-    if (request == "quit") return 0;
+    if (request == "quit") {
+      client.send(request, response);
+      return 0;
+    }
     
-    if (client.send(request, response) >= 0)
-      cout << "Response: '" << response << "'" << endl;
-    else {
+    if (client.send(request, response) >= 0){
+      replace(response.begin(), response.end(), '#', '\n');
+      cout << response << endl;
+    } else {
       cerr << "Client: IO error "<< endl;
       return 2;
     }

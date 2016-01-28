@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <memory>
 #include "TCPServer.h"
 
@@ -29,6 +30,8 @@ class MyApp {
       m = sp_MapMultimedia(new MapMultimedia());
     }
     
+    sp_MapMultimedia getMap() const { return m; };
+    
     /// Cette fonction est appelée chaque fois qu'il y a une requête à traiter.
     /// - 'request' contient la requête
     /// - 'response' sert à indiquer la réponse qui sera renvoyée au client
@@ -43,18 +46,48 @@ class MyApp {
     {
       // mettre cette variable à true si la commande modifie les donnees du programme
       bool changeData = false;
-      if (request == "delMedias" || request == "delGroups") changeData = true;
+      if (request == "delMedia" || request == "delGroups" || request == "crePhoto" ) changeData = true;
       
       // suivant le cas on bloque le verrou en mode WRITE ou en mode READ
       TCPServer::Lock lock(cnx, changeData);
       
-      cerr << "request: '" << request << "'" << endl;
+      //cerr << "request: '" << request << "'" << endl;
+      stringstream line;
+      line << request;
+      string command;
+      string params;
+      getline(line, command, ' ');
+      cerr << command.size() << " " << request.size() << endl;
+      
+      cerr << "Commande is: " << command << endl;
+      
+      if(command.size() != request.size()){
+        params = request.substr(command.size()+1);
+        cerr << "Params are:  " << params << endl;
+      } else
+        cerr << "No Params provided" << endl;
+      
+      
+      
+      if(command == "listeMedia") {
+        stringstream resp;
+        m->printListMultimedia(resp);
+        response = resp.str();
+      } else if(command == "findMedia") {
+        stringstream resp;
+        m->findMultimedia(params)->affiche(resp);
+        response = resp.str();
+      } else if(command == "playMedia") {
+        m->playMultimedia(params);
+      } else if(command == "delMedia"){
+        m->deleteMultimedia(params);
+      } else {
+        response = "Command not found";
+      }
       
       // simule un traitement long (décommenter pour tester le verrou)
       // if (changeData) sleep(10); else sleep(5);
       
-      response = "OK: " + request;
-      cerr << "response: '" << response << "'" << endl;
       
       // renvoyer false pour clore la connexion avec le client
       return true;
@@ -66,6 +99,15 @@ int main(int argc, char* argv[])
 {
   TCPServer * server = new TCPServer();
   MyApp * app = new MyApp();
+  
+  app->getMap()->createPhoto("Photo Saintelyon 1", "./Ressources/IMGP5539.JPG", 10, 10);
+  app->getMap()->createPhoto("Photo Saintelyon 2", "./Ressources/IMGP5550.JPG", 20, 20);
+  app->getMap()->createPhoto("Photo Saintelyon 3", "./Ressources/IMGP5552.JPG", 30, 30);
+  app->getMap()->createPhoto("toto", "./Ressources/IMGP5552.JPG", 30, 30);
+  
+  
+  
+  
   server->setCallback(app, &MyApp::processRequest);
   
   int port = (argc >= 2) ? atoi(argv[1]) : DEFAULT_PORT;
