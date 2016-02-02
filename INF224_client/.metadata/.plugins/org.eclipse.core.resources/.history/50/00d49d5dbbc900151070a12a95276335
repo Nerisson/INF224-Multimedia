@@ -1,0 +1,52 @@
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
+
+public class ClientApp extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	
+	private JButton bouton1;
+	private JButton bouton2;
+	private JButton bouton3;
+	
+	private JTextArea textArea;
+	
+	public ClientApp() {
+		super("My super App");
+		
+		this.pack();
+		this.setVisible(true);
+	}
+	
+	
+	public JButton getBouton1(){
+		if(bouton1 == null){
+			bouton1 = new JButton("Bouton 1");
+		}
+		return bouton1;
+	}
+	
+	public JButton getBouton2(){
+		if(bouton1 == null){
+			bouton1 = new JButton("Bouton 2");
+		}
+		return bouton2;
+	}
+	
+	public JButton getBouton3(){
+		if(bouton1 == null){
+			bouton1 = new JButton("Exit");
+		}
+		return bouton3;
+	}
+	
+	public JTextArea getTextArea(){
+		if(textArea == null){
+			textArea = new JTextArea();
+		}
+		return textArea;
+	}
+
+}
