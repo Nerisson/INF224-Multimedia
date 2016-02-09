@@ -1,0 +1,20 @@
+import javax.swing.JFrame;
+
+
+public class ClientApp2 extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+
+	public ClientApp2() {
+		super("Client App V2");
+		this.setLocationRelativeTo(null);
+		this.setSize(800, 600);
+		this.setVisible(true);
+	}
+	
+	
+	public static void main(String[] args) {
+		new ClientApp2();
+	}
+
+}
