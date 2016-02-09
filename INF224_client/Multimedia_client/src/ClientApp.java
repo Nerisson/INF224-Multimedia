@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -15,13 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 
 
-public class ClientApp extends JFrame implements ActionListener, DocumentListener{
+public class ClientApp extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -29,7 +28,14 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 	private JButton bouton2;
 	private JButton bouton3;
 	
+	private ActionBouton1 ab1 = new ActionBouton1();
+	private ActionBouton2 ab2 = new ActionBouton2();
+	
+	
+	
 	private JTextArea textArea;
+	
+	private JTextField commandField;
 	
 	private Client client;
 	
@@ -48,6 +54,8 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 		
 		getContentPane().add(new JScrollPane(getTextArea()), BorderLayout.CENTER);
 		
+		JPanel tmp2 = new JPanel();
+		
 		JPanel tmp = new JPanel();
 		tmp.setLayout(new GridLayout(1, 3));
 		
@@ -55,7 +63,11 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 		tmp.add(getBouton2());
 		tmp.add(getBouton3());
 		
-		getContentPane().add(tmp, BorderLayout.SOUTH);
+		tmp2.setLayout(new BorderLayout());
+		tmp2.add(tmp, BorderLayout.CENTER);
+		tmp2.add(getCommandField(), BorderLayout.NORTH);
+		
+		getContentPane().add(tmp2, BorderLayout.SOUTH);
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -66,8 +78,8 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 	
 	private void initializeToolBar() {
 		JToolBar jtb = new JToolBar("My super toolbar");
-		jtb.add(new ActionBouton1());
-		jtb.add(new ActionBouton2());
+		jtb.add(ab1);
+		jtb.add(ab2);
 		jtb.add(new ActionBouton3());
 		getContentPane().add(jtb, BorderLayout.NORTH);
 	}
@@ -77,8 +89,9 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 		JMenuBar menubar = new JMenuBar();
 		JMenu action = new JMenu("Action");
 		
-		action.add(new ActionBouton1());
-		action.add(new ActionBouton2());
+		action.add(ab1);
+		action.add(ab2);
+		ab2.setEnabled(false);
 		action.add(new ActionBouton3());
 		
 		menubar.add(action);
@@ -114,9 +127,32 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 	public JTextArea getTextArea(){
 		if(textArea == null){
 			textArea = new JTextArea();
-			textArea.getDocument().addDocumentListener(this);
+			textArea.setEditable(false);
 		}
 		return textArea;
+	}
+	
+	public JTextField getCommandField(){
+		if(commandField == null){
+			commandField = new JTextField();
+			commandField.setEnabled(false);
+			Action action = new AbstractAction() {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+			    public void actionPerformed(ActionEvent e) {
+			        JTextField src = (JTextField) e.getSource();
+					getTextArea().append(src.getText()+"\n");
+					String content = client.send(src.getText());
+					String nContent = content.replaceAll("#", "\n");
+					textArea.append(nContent+"\n");
+					src.setText("");
+			    }
+			};
+			commandField.addActionListener(action);
+		}
+		return commandField;
 	}
 	
 	@Override
@@ -129,30 +165,6 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 			System.exit(0);
 		}
 	}
-	
-	
-	@Override
-	public void changedUpdate(DocumentEvent e) {
-		
-	}
-
-
-	@Override
-	public void insertUpdate(DocumentEvent e) {
-
-			String toto = e.getDocument().toString();
-			System.out.println(toto);
-	}
-
-
-	@Override
-	public void removeUpdate(DocumentEvent e) {
-		
-	}
-	
-	
-	
-	
 	
 	
 	public static boolean validate(final String ip) {
@@ -173,6 +185,11 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 		}
 		
 		@Override
+		public boolean isEnabled() {
+			return client == null;
+		}
+		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			String addr = "";
 			while(!validate(addr)){
@@ -188,7 +205,9 @@ public class ClientApp extends JFrame implements ActionListener, DocumentListene
 				JOptionPane.showMessageDialog(getParent(), "error", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 			getTextArea().append("Connect to serveur: "+addr+" ok!\n");
-			
+			getCommandField().setEnabled(true);
+			ab1.setEnabled(false);
+			ab2.setEnabled(true);
 		}
 		
 		
