@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;ClientApp.initialimzeMenuBar()&apos; to &apos;initializeMenuBar&apos;&#x0A;- Original project: &apos;Multimedia_client&apos;&#x0A;- Original element: &apos;ClientApp.initialimzeMenuBar()&apos;&#x0A;- Renamed element: &apos;ClientApp.initializeMenuBar()&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;initialimzeMenuBar&apos;" flags="589826" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{ClientApp.java[ClientApp~initialimzeMenuBar" name="initializeMenuBar" references="true" stamp="1454425635912" version="1.0"/>
+</session>
