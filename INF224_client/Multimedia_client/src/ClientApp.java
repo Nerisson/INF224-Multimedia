@@ -1,4 +1,6 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +12,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -18,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 
 
 public class ClientApp extends JFrame implements ActionListener {
@@ -51,7 +55,6 @@ public class ClientApp extends JFrame implements ActionListener {
 		initializeToolBar();
 		
 		
-		
 		getContentPane().add(new JScrollPane(getTextArea()), BorderLayout.CENTER);
 		
 		JPanel tmp2 = new JPanel();
@@ -63,15 +66,22 @@ public class ClientApp extends JFrame implements ActionListener {
 		tmp.add(getBouton2());
 		tmp.add(getBouton3());
 		
+		JPanel tmp3 = new JPanel();
+		tmp3.setLayout(new BorderLayout());
+		JLabel label = new JLabel(">", SwingConstants.CENTER);
+		label.setBackground(Color.RED);
+		label.setPreferredSize(new Dimension(30, 0));
+		tmp3.add(label, BorderLayout.WEST);
+		tmp3.add(getCommandField(), BorderLayout.CENTER);
 		tmp2.setLayout(new BorderLayout());
-		tmp2.add(tmp, BorderLayout.CENTER);
-		tmp2.add(getCommandField(), BorderLayout.NORTH);
+		tmp2.add(tmp3, BorderLayout.CENTER);
 		
 		getContentPane().add(tmp2, BorderLayout.SOUTH);
 		
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(400, 300);
+		//setSize(400, 300);
+		pack();
 		this.setVisible(true);
 	}
 	
@@ -127,7 +137,17 @@ public class ClientApp extends JFrame implements ActionListener {
 	public JTextArea getTextArea(){
 		if(textArea == null){
 			textArea = new JTextArea();
+			textArea.setText("# Welcome in the remote controller\n"
+					+ "# First connect to server using button above\n"
+					+ "# Then type command in the field below\n"
+					+ "#\n"
+					+ "# Available commands are:\n"
+					+ "#   listeMedia\n"
+					+ "#   findMedia <name>\n"
+					+ "#   playMedia <name>\n"
+					+ "#   delMedia <name>\n\n");
 			textArea.setEditable(false);
+			textArea.setPreferredSize(new Dimension(400, 300));
 		}
 		return textArea;
 	}
@@ -194,6 +214,8 @@ public class ClientApp extends JFrame implements ActionListener {
 			String addr = "";
 			while(!validate(addr)){
 				addr = JOptionPane.showInputDialog("Please fill the adress and port of host", "127.0.0.1:3331");
+				if(addr == null)
+					return;
 			}
 			String host = addr.substring(0, addr.lastIndexOf(":"));
 			int port = Integer.parseInt(addr.substring(addr.lastIndexOf(":")+1, addr.length()));
