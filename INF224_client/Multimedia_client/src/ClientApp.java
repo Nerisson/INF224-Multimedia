@@ -173,7 +173,10 @@ public class ClientApp extends JFrame implements ActionListener {
 					+ "#   listeMedia\n"
 					+ "#   findMedia <name>\n"
 					+ "#   playMedia <name>\n"
-					+ "#   delMedia <name>\n\n");
+					+ "#   delMedia <name>\n"
+					+ "#   listeGroupe\n"
+					+ "#   findGroupe <name>\n\n");
+					
 			textArea.setEditable(false);
 			textArea.setPreferredSize(new Dimension(400, 300));
 		}
