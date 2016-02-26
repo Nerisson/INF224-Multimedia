@@ -262,15 +262,15 @@ public class ClientApp extends JFrame implements ActionListener {
 			int port = Integer.parseInt(addr.substring(addr.lastIndexOf(":")+1, addr.length()));
 			try {
 				client = new Client(host, port);
-				getTextArea().append("Connect to serveur: "+addr+" ok!\n");
-				getCommandField().setEnabled(true);
-				ab1.setEnabled(false);
-				ab2.setEnabled(true);
 			} catch (UnknownHostException e1) {
 				JOptionPane.showMessageDialog(getParent(), "error", "Address provided is unreachable", JOptionPane.ERROR_MESSAGE);
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(getParent(), "error", "Error", JOptionPane.ERROR_MESSAGE);
 			}
+			getTextArea().append("Connect to serveur: "+addr+" ok!\n");
+			getCommandField().setEnabled(true);
+			ab1.setEnabled(false);
+			ab2.setEnabled(true);
 		}
 		
 		
