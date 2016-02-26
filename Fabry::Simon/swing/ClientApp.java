@@ -1,0 +1,323 @@
+/*!
+ * \file ClientApp.java
+ * \author Fabry Simon
+ * \version 0.1
+ */
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.regex.Pattern;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
+/*! \class ClientApp
+ * \brief Classe graphique principale du client 
+ *  La classe est la frame principale de la telecomande
+ */
+public class ClientApp extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	
+	private JButton bouton1; /*!< Bouton 1 */
+	private JButton bouton2; /*!< Bouton 2 */
+	private JButton bouton3; /*!< Bouton exit */
+	
+	private ActionBouton1 ab1 = new ActionBouton1(); /*!< Bouton connect */
+	private ActionBouton2 ab2 = new ActionBouton2(); /*!< Bouton listeMedia */
+	
+	
+	
+	private JTextArea textArea; /*!< TextArea de log de l'appli */
+	
+	private JTextField commandField; /*!< Champs de commande */
+	
+	private Client client; /*!< Instance de la classe Client */
+	
+	private static final Pattern PATTERN = Pattern.compile("^(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):(\\d+)$");
+	
+	/*!
+	 * \brief Constructeur
+	 */
+	public ClientApp() {
+		super("My super App");
+		
+		getContentPane().setLayout(new BorderLayout());
+		
+		initializeMenuBar();
+		
+		initializeToolBar();
+		
+		
+		getContentPane().add(new JScrollPane(getTextArea()), BorderLayout.CENTER);
+		
+		JPanel tmp2 = new JPanel();
+		
+		JPanel tmp = new JPanel();
+		tmp.setLayout(new GridLayout(1, 3));
+		
+		tmp.add(getBouton1());
+		tmp.add(getBouton2());
+		tmp.add(getBouton3());
+		
+		JPanel tmp3 = new JPanel();
+		tmp3.setLayout(new BorderLayout());
+		JLabel label = new JLabel(">", SwingConstants.CENTER);
+		label.setBackground(Color.RED);
+		label.setPreferredSize(new Dimension(30, 0));
+		tmp3.add(label, BorderLayout.WEST);
+		tmp3.add(getCommandField(), BorderLayout.CENTER);
+		tmp2.setLayout(new BorderLayout());
+		tmp2.add(tmp3, BorderLayout.CENTER);
+		
+		getContentPane().add(tmp2, BorderLayout.SOUTH);
+		
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//setSize(400, 300);
+		pack();
+		this.setVisible(true);
+	}
+	
+	/*!
+	 * Initialise la toolbar
+	 */
+	private void initializeToolBar() {
+		JToolBar jtb = new JToolBar("My super toolbar");
+		jtb.add(ab1);
+		jtb.add(ab2);
+		jtb.add(new ActionBouton3());
+		getContentPane().add(jtb, BorderLayout.NORTH);
+	}
+
+
+	/*!
+	 * Initialise la barre de menu
+	 */
+	private void initializeMenuBar() {
+		JMenuBar menubar = new JMenuBar();
+		JMenu action = new JMenu("Action");
+		
+		action.add(ab1);
+		action.add(ab2);
+		ab2.setEnabled(false);
+		action.add(new ActionBouton3());
+		
+		menubar.add(action);
+		
+		setJMenuBar(menubar);
+	}
+
+	/*!
+	 * \return le bouton numero 1
+	 */
+	public JButton getBouton1(){
+		if(bouton1 == null){
+			bouton1 = new JButton("Bouton 1");
+			bouton1.addActionListener(this);
+		}
+		return bouton1;
+	}
+	
+	/*!
+	 * \return le bouton numero 2
+	 */
+	public JButton getBouton2(){
+		if(bouton2 == null){
+			bouton2 = new JButton("Bouton 2");
+			bouton2.addActionListener(this);
+		}
+		return bouton2;
+	}
+	
+	/*!
+	 * \return le bouton exit
+	 */
+	public JButton getBouton3(){
+		if(bouton3 == null){
+			bouton3 = new JButton("Exit");
+			bouton3.addActionListener(this);
+		}
+		return bouton3;
+	}
+	
+	/*!
+	 * \return la TextArea
+	 */
+	public JTextArea getTextArea(){
+		if(textArea == null){
+			textArea = new JTextArea();
+			textArea.setText("# Welcome in the remote controller\n"
+					+ "# First connect to server using button above\n"
+					+ "# Then type command in the field below\n"
+					+ "#\n"
+					+ "# Available commands are:\n"
+					+ "#   listeMedia\n"
+					+ "#   findMedia <name>\n"
+					+ "#   playMedia <name>\n"
+					+ "#   delMedia <name>\n\n");
+			textArea.setEditable(false);
+			textArea.setPreferredSize(new Dimension(400, 300));
+		}
+		return textArea;
+	}
+	
+	/*!
+	 * \return le champs de saisie de commande
+	 */
+	public JTextField getCommandField(){
+		if(commandField == null){
+			commandField = new JTextField();
+			commandField.setEnabled(false);
+			Action action = new AbstractAction() {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+			    public void actionPerformed(ActionEvent e) {
+			        JTextField src = (JTextField) e.getSource();
+					getTextArea().append(src.getText()+"\n");
+					String content = client.send(src.getText());
+					String nContent = content.replaceAll("#", "\n");
+					textArea.append(nContent+"\n");
+					src.setText("");
+			    }
+			};
+			commandField.addActionListener(action);
+		}
+		return commandField;
+	}
+	
+	/*!
+	 * Action a effectuer en cas de click sur les boutons 1, 2 et exit
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == getBouton1()){
+			getTextArea().append("Bouton 1 click\n");
+		} else if(e.getSource() == getBouton2()){
+			getTextArea().append("Bouton 2 click\n");
+		} else if(e.getSource() == getBouton3()){
+			System.exit(0);
+		}
+	}
+	
+	
+	public static boolean validate(final String ip) {
+	    return PATTERN.matcher(ip).matches();
+	}
+	
+	public static void main(String[] args) {
+		new ClientApp();
+	}
+
+	
+	/*! \class ActionBouton1
+	 * \brief Classe interne de connection
+	 *  La classe permet d'ouvrir une popup et d'ouvrir une connection vers l'hote
+	 */
+	class ActionBouton1 extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		public ActionBouton1() {
+			super("Connect to host");
+		}
+		
+		@Override
+		public boolean isEnabled() {
+			return client == null;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String addr = "";
+			while(!validate(addr)){
+				addr = JOptionPane.showInputDialog("Please fill the adress and port of host", "127.0.0.1:3331");
+				if(addr == null)
+					return;
+			}
+			String host = addr.substring(0, addr.lastIndexOf(":"));
+			int port = Integer.parseInt(addr.substring(addr.lastIndexOf(":")+1, addr.length()));
+			try {
+				client = new Client(host, port);
+			} catch (UnknownHostException e1) {
+				JOptionPane.showMessageDialog(getParent(), "error", "Address provided is unreachable", JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e1) {
+				JOptionPane.showMessageDialog(getParent(), "error", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			getTextArea().append("Connect to serveur: "+addr+" ok!\n");
+			getCommandField().setEnabled(true);
+			ab1.setEnabled(false);
+			ab2.setEnabled(true);
+		}
+		
+		
+		
+	}
+	
+	/*! \class ActionBouton2
+	 * \brief Classe interne de connection
+	 *  La classe permet de lancer la commande pour lister les media
+	 */
+	class ActionBouton2 extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+
+		public ActionBouton2() {
+			super("Retrieve List of media");
+		}
+		
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			textArea.append("Sending: listeMedia\n");
+			String content = client.send("listeMedia");
+			String nContent = content.replaceAll("#", "\n");
+			textArea.append(nContent+"\n");
+			
+		}
+		
+	}
+	
+	/*! \class ActionBouton3
+	 * \brief Classe interne de connection
+	 *  La classe permet de quitter l'application
+	 */
+	class ActionBouton3 extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		public ActionBouton3() {
+			super("Exit App");
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+		
+	}
+
+	
+	
+}
