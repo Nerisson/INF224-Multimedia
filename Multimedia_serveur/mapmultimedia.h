@@ -47,6 +47,7 @@ class MapMultimedia {
         void printMultimedia(string _nom, ostream& ostream) const;
         void printGroupe(string _nom, ostream& ostream) const;
         void printListMultimedia(ostream& osteam) const;
+        void printListeGroupe(ostream& osteam) const;
         
 /*          Play                                                                           */
         void playMultimedia(string _nom) const;

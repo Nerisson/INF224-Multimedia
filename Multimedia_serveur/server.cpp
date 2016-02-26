@@ -14,6 +14,7 @@
 using namespace std;
 
 typedef std::shared_ptr<MapMultimedia> sp_MapMultimedia;
+typedef std::shared_ptr<Multimedia> sp_Multimedia;
 
 const int DEFAULT_PORT = 3331;
 
@@ -73,6 +74,10 @@ class MyApp {
         stringstream resp;
         m->printListMultimedia(resp);
         response = resp.str();
+      } else if(command == "listeGroupe") {
+        stringstream resp;
+        m->printListeGroupe(resp);
+        response = resp.str();
       } else if(command == "findMedia") {
         stringstream resp;
         m->findMultimedia(params)->affiche(resp);
@@ -81,6 +86,10 @@ class MyApp {
         m->playMultimedia(params);
       } else if(command == "delMedia"){
         m->deleteMultimedia(params);
+      } else if(command == "findGroupe"){
+        stringstream resp;
+        m->findGroupe(params)->affiche(resp);
+        response = resp.str();
       } else {
         response = "Command not found";
       }
@@ -100,11 +109,15 @@ int main(int argc, char* argv[])
   TCPServer * server = new TCPServer();
   MyApp * app = new MyApp();
   
-  app->getMap()->createPhoto("Photo Saintelyon 1", "./Ressources/IMGP5539.JPG", 10, 10);
-  app->getMap()->createPhoto("Photo Saintelyon 2", "./Ressources/IMGP5550.JPG", 20, 20);
-  app->getMap()->createPhoto("Photo Saintelyon 3", "./Ressources/IMGP5552.JPG", 30, 30);
+  sp_Multimedia p1 = app->getMap()->createPhoto("Photo Saintelyon 1", "./Ressources/IMGP5539.JPG", 10, 10);
+  sp_Multimedia p2 = app->getMap()->createPhoto("Photo Saintelyon 2", "./Ressources/IMGP5550.JPG", 20, 20);
+  sp_Multimedia p3 = app->getMap()->createPhoto("Photo Saintelyon 3", "./Ressources/IMGP5552.JPG", 30, 30);
   app->getMap()->createPhoto("toto", "./Ressources/IMGP5552.JPG", 30, 30);
   
+  app->getMap()->createGroupe("SainteLyon");
+  app->getMap()->findGroupe("SainteLyon")->push_back(p1);
+  app->getMap()->findGroupe("SainteLyon")->push_back(p2);
+  app->getMap()->findGroupe("SainteLyon")->push_back(p3);
   
   
   
@@ -114,10 +127,11 @@ int main(int argc, char* argv[])
   cout << "Starting Server on port " << port << endl;
   int status = server->run(port);
   
+  delete app;
   if (status < 0) {
     cerr << "Could not start Server on port " << port << endl;
     return 1;
-  }
-  else return 0;
+  } else
+    return 0;
 }
 

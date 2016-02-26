@@ -1,3 +1,0 @@
-server.o: server.cpp TCPServer.h Socket.h
-TCPServer.o: TCPServer.cpp TCPServer.h Socket.h
-Socket.o: Socket.cpp Socket.h

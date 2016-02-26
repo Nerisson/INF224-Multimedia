@@ -76,9 +76,15 @@ void MapMultimedia::printGroupe(string _nom, ostream& ostream) const{
 }
 
 
-void MapMultimedia::printListMultimedia(ostream& ostream) const{
-    for(auto it=list_ojb.begin() ; it!=list_ojb.end() ; ++it){
+void MapMultimedia::printListMultimedia(ostream& ostream) const {
+    for(auto it=list_ojb.begin() ; it!=list_ojb.end() ; ++it) {
         ostream << it->first << ":" << it->second->getClassName() <<"#";
+    }
+}
+
+void MapMultimedia::printListeGroupe(ostream& ostream) const {
+    for(auto it=list_groupes.begin() ; it!=list_groupes.end() ; ++it) {
+        ostream << it->first << "#";
     }
 }
 
