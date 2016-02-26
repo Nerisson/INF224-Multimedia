@@ -1,3 +1,9 @@
+/*!
+ * \file ClientApp.java
+ * \author Fabry Simon
+ * \version 0.1
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,28 +29,34 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-
+/*! \class ClientApp
+ * \brief Classe graphique principale du client 
+ *  La classe est la frame principale de la telecomande
+ */
 public class ClientApp extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	private JButton bouton1;
-	private JButton bouton2;
-	private JButton bouton3;
+	private JButton bouton1; /*!< Bouton 1 */
+	private JButton bouton2; /*!< Bouton 2 */
+	private JButton bouton3; /*!< Bouton exit */
 	
-	private ActionBouton1 ab1 = new ActionBouton1();
-	private ActionBouton2 ab2 = new ActionBouton2();
+	private ActionBouton1 ab1 = new ActionBouton1(); /*!< Bouton connect */
+	private ActionBouton2 ab2 = new ActionBouton2(); /*!< Bouton listeMedia */
 	
 	
 	
-	private JTextArea textArea;
+	private JTextArea textArea; /*!< TextArea de log de l'appli */
 	
-	private JTextField commandField;
+	private JTextField commandField; /*!< Champs de commande */
 	
-	private Client client;
+	private Client client; /*!< Instance de la classe Client */
 	
 	private static final Pattern PATTERN = Pattern.compile("^(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):(\\d+)$");
 	
+	/*!
+	 * \brief Constructeur
+	 */
 	public ClientApp() {
 		super("My super App");
 		
@@ -85,7 +97,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	
+	/*!
+	 * Initialise la toolbar
+	 */
 	private void initializeToolBar() {
 		JToolBar jtb = new JToolBar("My super toolbar");
 		jtb.add(ab1);
@@ -95,6 +109,9 @@ public class ClientApp extends JFrame implements ActionListener {
 	}
 
 
+	/*!
+	 * Initialise la barre de menu
+	 */
 	private void initializeMenuBar() {
 		JMenuBar menubar = new JMenuBar();
 		JMenu action = new JMenu("Action");
@@ -109,7 +126,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		setJMenuBar(menubar);
 	}
 
-
+	/*!
+	 * \return le bouton numero 1
+	 */
 	public JButton getBouton1(){
 		if(bouton1 == null){
 			bouton1 = new JButton("Bouton 1");
@@ -118,6 +137,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		return bouton1;
 	}
 	
+	/*!
+	 * \return le bouton numero 2
+	 */
 	public JButton getBouton2(){
 		if(bouton2 == null){
 			bouton2 = new JButton("Bouton 2");
@@ -126,6 +148,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		return bouton2;
 	}
 	
+	/*!
+	 * \return le bouton exit
+	 */
 	public JButton getBouton3(){
 		if(bouton3 == null){
 			bouton3 = new JButton("Exit");
@@ -134,6 +159,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		return bouton3;
 	}
 	
+	/*!
+	 * \return la TextArea
+	 */
 	public JTextArea getTextArea(){
 		if(textArea == null){
 			textArea = new JTextArea();
@@ -152,6 +180,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		return textArea;
 	}
 	
+	/*!
+	 * \return le champs de saisie de commande
+	 */
 	public JTextField getCommandField(){
 		if(commandField == null){
 			commandField = new JTextField();
@@ -175,6 +206,9 @@ public class ClientApp extends JFrame implements ActionListener {
 		return commandField;
 	}
 	
+	/*!
+	 * Action a effectuer en cas de click sur les boutons 1, 2 et exit
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == getBouton1()){
@@ -196,6 +230,10 @@ public class ClientApp extends JFrame implements ActionListener {
 	}
 
 	
+	/*! \class ActionBouton1
+	 * \brief Classe interne de connection
+	 *  La classe permet d'ouvrir une popup et d'ouvrir une connection vers l'hote
+	 */
 	class ActionBouton1 extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -236,6 +274,10 @@ public class ClientApp extends JFrame implements ActionListener {
 		
 	}
 	
+	/*! \class ActionBouton2
+	 * \brief Classe interne de connection
+	 *  La classe permet de lancer la commande pour lister les media
+	 */
 	class ActionBouton2 extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -257,6 +299,10 @@ public class ClientApp extends JFrame implements ActionListener {
 		
 	}
 	
+	/*! \class ActionBouton3
+	 * \brief Classe interne de connection
+	 *  La classe permet de quitter l'application
+	 */
 	class ActionBouton3 extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
